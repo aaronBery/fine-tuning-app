@@ -1,6 +1,8 @@
-import { Job, Jobs } from "@/models/job.model";
-import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from "@mui/material";
+import { Jobs } from "@/models/job.model";
+import { Card, Chip, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from "@mui/material";
+import Link from "next/link";
 import { Suspense } from "react";
+import { PieChart } from '@mui/x-charts/PieChart';
 
 function createData(
   id: string,
@@ -21,37 +23,74 @@ export default async function Home() {
 
   const jobsListing: Jobs = await jobsReq.json();
 
-  console.log(jobsListing.summary)
-
-  if (!jobsListing || !jobsListing?.summary) {
-    return <p>Loading...</p>
+  const getChipColour = (status: string) => {
+    switch(status) {
+      case 'Running':
+        return 'primary'
+      case 'Completed':
+        return 'success';
+      case 'Failed':
+        return 'error'
+      default:
+        return 'default';
+    }
   }
 
   return (
-    <Suspense>
-      <TableContainer>
-        <Table sx={{ minWidth: 650 }} aria-label="simple table">
-          <TableHead>
-            <TableRow>
-              <TableCell align="right">Job ID</TableCell>
-              <TableCell align="right">Date</TableCell>
-              <TableCell align="right">Status</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {jobsListing.jobs.map((row) => (
-              <TableRow
-                key={row.id}
-                sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-              >
-                <TableCell align="right">{row.id}</TableCell>
-                <TableCell align="right">{row.date}</TableCell>
-                <TableCell align="right">{row.status}</TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-    </TableContainer>
-  </Suspense>
+    <div className="grid grid-cols-2">
+      <div className="col-span-1">
+        <Card sx={{ padding: 5}}>
+          <h2 className="">Fine-tuning usage</h2>
+          <Suspense>
+            <Card sx={{ padding: 5}}>
+                <PieChart series={[
+                  { data: [
+                      { id: 0, value: jobsListing.summary.completed, label: 'Completed'},
+                      { id: 1, value: jobsListing.summary.running, label: 'Running'},
+                      { id: 2, value: jobsListing.summary.failed, label: 'Failed'}
+                    ]
+                  }
+                ]} />
+            </Card>
+
+            <TableContainer>
+              <Table>
+                <TableHead>
+                  <TableRow>
+                    <TableCell>Job ID</TableCell>
+                    <TableCell>Date</TableCell>
+                    <TableCell align="right">Status</TableCell>
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  {jobsListing.jobs.map((row) => (
+                    <TableRow
+                      key={row.id}
+                    >
+                      <TableCell>{row.id.slice(0, 23)}</TableCell>
+                      <TableCell>{new Date(row.date).toLocaleString()}</TableCell>
+                      <TableCell align="right"><Chip label={row.status} color={getChipColour(row.status)} /></TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </TableContainer>
+          </Suspense>
+        </Card>
+      </div>
+      <div className="col-span-1">
+        <Card sx={{ padding: 5}}>
+          <h2>Get Started</h2>
+
+          <Card sx={{ padding: 5}}>
+            <h3 className="h">Get started with Fine-tuning</h3>
+
+            <p className="mb-5">simple, ready-to-use interface endpoints that are paid for per request. No commitments, only pay for what you use with Nscale Serverless.</p>
+                  
+            <Link href="/new">New Fine-tuning Job</Link>
+          </Card>
+        </Card>
+      </div>
+    </div>
   );
 }
