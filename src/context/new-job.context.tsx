@@ -23,6 +23,7 @@ export const NewJobContext = createContext<{
     updateEvaluationEpochs: (evaluationEpochs: string) => void,
     updateLearningRate: (learningRate: string) => void,
     currentStep: number,
+    stepCount: number,
     setCurrentStep: (step: number) => void,
 }>({} as any);
 
@@ -38,6 +39,9 @@ export const NewJobProvider: React.FC<PropsWithChildren> = ({children}) => {
         createdAt: '',
         status: '',
     });
+
+    // register steps so we know how many there are
+    const [ stepCount ] = useState([Stages.SET_UP, Stages.CONFIGURE, Stages.REVIEW].length);
 
     const [ currentStep, setCurrentStep ] = useState(Stages.SET_UP);
 
@@ -99,6 +103,7 @@ export const NewJobProvider: React.FC<PropsWithChildren> = ({children}) => {
             updateEvaluationEpochs,
             updateLearningRate,
             currentStep,
+            stepCount,
             setCurrentStep
         }}>{children}</NewJobContext.Provider>
     )

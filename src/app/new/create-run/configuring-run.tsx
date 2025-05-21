@@ -1,5 +1,6 @@
 import { NewJobContext } from "@/context/new-job.context";
 import { Stages } from "@/models/stages.enum";
+import { buttonStyles } from "@/util/styles";
 import { Button, FormControl, Input, InputLabel } from "@mui/material";
 import { FormEvent, useContext, useState } from "react";
 
@@ -26,11 +27,8 @@ export const ConfiguringRun = () => {
     const isValidLearningRate = () => parseInt(newJob.learningRate, 10) >= 0 && parseInt(newJob.learningRate, 10) <= 1;
 
     return (
-        <>
-            <h1>Configure your run</h1>
-            <p className="mb-5">Adjust these parameters to control how your model learns, balances performance, and prevents overfitting during fine-tuning. See the docs for guidance on settingn these parameters for optimal fine-tuning.</p>
-            
-            <form onSubmit={(e) => submit(e)} className="grid grid-cols-2">
+        <>  
+            <form onSubmit={(e) => submit(e)} className="grid grid-cols-2 gap-5">
                 <div className="grid grid-cols-1">
                     <FormControl sx={formControlSx}>
                         <InputLabel htmlFor="ephochs">Epochs</InputLabel>
@@ -62,7 +60,10 @@ export const ConfiguringRun = () => {
                     </FormControl>
                 </div>
                 <Button type="submit" 
-                    disabled={!isValidEpoch() || !isValidEvaluationAndWarmupEpochs() || !isValidLearningRate()}>
+                    disabled={!isValidEpoch() || !isValidEvaluationAndWarmupEpochs() || !isValidLearningRate()} sx={{
+                        ...buttonStyles,
+                        marginTop: 2,
+                    }}>
                     Next: Review
                 </Button>
             </form>
