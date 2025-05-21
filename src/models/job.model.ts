@@ -19,3 +19,8 @@ export interface Jobs {
         failed: number;
     }
 }
+
+export interface BaseModel {
+    id: string;
+    displayName: string;
+}

@@ -3,6 +3,7 @@ import { Card, Chip, Table, TableBody, TableCell, TableContainer, TableHead, Tab
 import Link from "next/link";
 import { Suspense } from "react";
 import { PieChart } from '@mui/x-charts/PieChart';
+import HandymanIcon from '@mui/icons-material/Handyman';
 
 function createData(
   id: string,
@@ -84,8 +85,8 @@ export default async function Home() {
 
           <Card sx={{ padding: 5}}>
             <h3 className="h">Get started with Fine-tuning</h3>
-
-            <p className="mb-5">simple, ready-to-use interface endpoints that are paid for per request. No commitments, only pay for what you use with Nscale Serverless.</p>
+            <HandymanIcon />
+            <p className="mb-5">Simple, ready-to-use interface endpoints that are paid for per request. No commitments, only pay for what you use with Nscale Serverless.</p>
                   
             <Link href="/new">New Fine-tuning Job</Link>
           </Card>
