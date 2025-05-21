@@ -21,9 +21,7 @@ export const ConfiguringRun = () => {
 
     const isValidEpoch = () => newJob.epochs > 0;
 
-    const isValidEvaluationEpoch = () => newJob.evaluationEpochs <= newJob.epochs;
-
-    const isValidWarmupEpoch = () => newJob.warmupEpochs <= newJob.epochs;
+    const isValidEvaluationAndWarmupEpochs = () => (newJob.evaluationEpochs + newJob.warmupEpochs) <= newJob.epochs;
 
     const isValidLearningRate = () => parseInt(newJob.learningRate, 10) >= 0 && parseInt(newJob.learningRate, 10) <= 1;
 
@@ -44,7 +42,7 @@ export const ConfiguringRun = () => {
                     <FormControl sx={formControlSx}>
                         <InputLabel htmlFor="warmupEpochs">Warmup Epochs</InputLabel>
                         <Input id="warmupEpochs" type="number" name="warmupEpochs" value={newJob.warmupEpochs} onChange={(e) => updateWarmupEpochs(e.target.value)}
-                            error={warmupEpochsTouched && !isValidWarmupEpoch()}
+                            error={warmupEpochsTouched && !isValidEvaluationAndWarmupEpochs()}
                             onFocus={() => setWarmupEpochsTouched(true)} />
                     </FormControl>
                 </div>
@@ -52,7 +50,7 @@ export const ConfiguringRun = () => {
                     <FormControl sx={formControlSx}>
                         <InputLabel htmlFor="evaluationEpochs">Evaluation Epochs</InputLabel>
                         <Input id="evaluationEpochs" type="number" name="evaluationEpochs" value={newJob.evaluationEpochs} onChange={(e) => updateEvaluationEpochs(e.target.value)}
-                            error={evaluationEpochsTouched && !isValidEvaluationEpoch()}
+                            error={evaluationEpochsTouched && !isValidEvaluationAndWarmupEpochs()}
                             onFocus={() => setEvaluationEpochsTouched(true)} />
                     </FormControl>
 
@@ -64,7 +62,7 @@ export const ConfiguringRun = () => {
                     </FormControl>
                 </div>
                 <Button type="submit" 
-                    disabled={!isValidEpoch() || !isValidEvaluationEpoch() || !isValidWarmupEpoch() || !isValidLearningRate()}>
+                    disabled={!isValidEpoch() || !isValidEvaluationAndWarmupEpochs() || !isValidLearningRate()}>
                     Next: Review
                 </Button>
             </form>

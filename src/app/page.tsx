@@ -1,9 +1,10 @@
 import { Jobs } from "@/models/job.model";
-import { Card, Chip, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from "@mui/material";
+import { Button, Card, Chip, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from "@mui/material";
 import Link from "next/link";
 import { Suspense } from "react";
 import { PieChart } from '@mui/x-charts/PieChart';
 import HandymanIcon from '@mui/icons-material/Handyman';
+import { buttonStyles } from "@/util/styles";
 
 function createData(
   id: string,
@@ -38,12 +39,12 @@ export default async function Home() {
   }
 
   return (
-    <div className="grid grid-cols-2">
+    <div className="grid grid-cols-2 gap-5 mt-5">
       <div className="col-span-1">
-        <Card sx={{ padding: 5}}>
-          <h2 className="">Fine-tuning usage</h2>
+        <Card sx={{ padding: 3}}>
+          <h2 className="mb-5 text-lg font-bold">Fine-tuning usage</h2>
           <Suspense>
-            <Card sx={{ padding: 5}}>
+            <Card sx={{ padding: 5, marginBottom: 5}}>
                 <PieChart series={[
                   { data: [
                       { id: 0, value: jobsListing.summary.completed, label: 'Completed'},
@@ -56,7 +57,7 @@ export default async function Home() {
 
             <TableContainer>
               <Table>
-                <TableHead>
+                <TableHead className="bg-gray-50">
                   <TableRow>
                     <TableCell>Job ID</TableCell>
                     <TableCell>Date</TableCell>
@@ -71,6 +72,7 @@ export default async function Home() {
                       <TableCell>{row.id.slice(0, 23)}</TableCell>
                       <TableCell>{new Date(row.date).toLocaleString()}</TableCell>
                       <TableCell align="right"><Chip label={row.status} color={getChipColour(row.status)} /></TableCell>
+                      
                     </TableRow>
                   ))}
                 </TableBody>
@@ -80,15 +82,24 @@ export default async function Home() {
         </Card>
       </div>
       <div className="col-span-1">
-        <Card sx={{ padding: 5}}>
-          <h2>Get Started</h2>
+        <Card sx={{ padding: 3}}>
+          <h2 className="mb-5 text-lg font-bold">Get Started</h2>
 
           <Card sx={{ padding: 5}}>
-            <h3 className="h">Get started with Fine-tuning</h3>
-            <HandymanIcon />
-            <p className="mb-5">Simple, ready-to-use interface endpoints that are paid for per request. No commitments, only pay for what you use with Nscale Serverless.</p>
-                  
-            <Link href="/new">New Fine-tuning Job</Link>
+            <div className="grid grid-cols-4">
+              <div className="col-span-1 grid content-center justify-center bg-gray-50 p-5">
+                <HandymanIcon sx={{
+                  height: 'auto',
+                  width: '100%'
+                }}/>
+              </div>
+              <div className="col-span-3 p-5">
+                <h3 className="mb-5 text-lg font-bold">Get started with Fine-tuning</h3>
+                <p className="mb-5">Simple, ready-to-use interface endpoints that are paid for per request. No commitments, only pay for what you use with Nscale Serverless.</p>
+                      
+                <Link href="/new"><Button sx={buttonStyles}>New Fine-tuning Job</Button></Link>
+              </div>
+            </div>
           </Card>
         </Card>
       </div>

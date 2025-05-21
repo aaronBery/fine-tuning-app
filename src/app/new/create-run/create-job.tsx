@@ -1,7 +1,6 @@
 
 'use server'
 
-import { NewJobContextModel } from "@/context/new-job.context";
 import { NewJobPostModel } from "./review";
 
 const apiUrl = process.env.API_URL ?? '';
@@ -13,10 +12,13 @@ export async function createJob(job: NewJobPostModel) {
         body: JSON.stringify(job),
         headers: {
             'X-API-Key': apiKey,
-            'Content-Type': 'application/json',
-            'Accept': 'application/json'
+            'Content-Type': 'application/json'
         }
     });
-
-    console.log(response);
+    
+    const { status, statusText } = response;
+    return {
+        status,
+        statusText
+    }
 }

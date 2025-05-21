@@ -3,7 +3,7 @@
 import { NewJobContext, NewJobContextModel } from "@/context/new-job.context"
 import { BaseModel } from "@/models/job.model";
 import { Button } from "@mui/material";
-import { FormEvent, useContext } from "react"
+import { FormEvent, useContext, useState } from "react"
 import { createJob } from "./create-job";
 
 interface ReviewProps {
@@ -21,6 +21,7 @@ export interface NewJobPostModel {
 
 export const Review = ({ baseModelOptions }: ReviewProps) => {
     const { newJob } = useContext(NewJobContext);
+    const [ errorMsg, setErrorMsg ] = useState('');
 
     const getModelNameFromId = (id: string) => baseModelOptions.find(model => model.id === newJob.baseModel)?.displayName;
 
@@ -33,14 +34,18 @@ export const Review = ({ baseModelOptions }: ReviewProps) => {
             epochs,
             evaluationEpochs,
             warmupEpochs,
-            learningRate: parseInt(newJob.learningRate, 10)
+            learningRate: parseInt(job.learningRate, 10)
         }
     }
 
-    const submit = (e: FormEvent<HTMLButtonElement>) => {
+    const submit = async(e: FormEvent<HTMLButtonElement>) => {
         e.preventDefault();
 
-        createJob(getBodyFromJobData(newJob));
+        const response = await createJob(getBodyFromJobData(newJob));
+
+        if(response.status !== 200) {
+            setErrorMsg(response.statusText);
+        }
     }
 
     return (
@@ -53,6 +58,8 @@ export const Review = ({ baseModelOptions }: ReviewProps) => {
             <p>Epochs: {newJob.epochs} Eval Epochs: {newJob.evaluationEpochs} Warmup Epochs: {newJob.warmupEpochs} Learning rate: {newJob.learningRate}</p>
 
             <Button type="button" onClick={e => submit(e)}>Start fine-tuning</Button>
+
+            {errorMsg && <p>{errorMsg}</p> }
         </>
     );
 }
