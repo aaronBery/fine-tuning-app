@@ -4,7 +4,7 @@ import { NewJobContext } from "@/context/new-job.context";
 import { BaseModel } from "@/models/job.model";
 import { Stages } from "@/models/stages.enum";
 import { buttonStyles } from "@/util/styles";
-import { Button, FormControl, Input, InputLabel, MenuItem, Select, TextField } from "@mui/material";
+import { Button, FormControl, MenuItem, Select, TextField } from "@mui/material";
 import { FormEvent, useContext, useState } from "react";
 
 interface SetUpRunProps {

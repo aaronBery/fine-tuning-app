@@ -1,4 +1,3 @@
-import { setUpFormModel } from "@/app/new/create-run/set-up-run";
 import { Stages } from "@/models/stages.enum";
 import { PropsWithChildren, useState, createContext } from "react";
 
@@ -25,6 +24,7 @@ export const NewJobContext = createContext<{
     currentStep: number,
     stepCount: number,
     setCurrentStep: (step: number) => void,
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 }>({} as any);
 
 export const NewJobProvider: React.FC<PropsWithChildren> = ({children}) => {

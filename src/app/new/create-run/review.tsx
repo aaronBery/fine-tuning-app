@@ -7,7 +7,7 @@ import { FormEvent, useContext, useState } from "react"
 import { createJob } from "./create-job";
 import { buttonStyles } from "@/util/styles";
 import { OverViewCard } from "@/components/overview-card";
-import { Architecture, Chat, Handyman, Tune } from "@mui/icons-material";
+import { Architecture, Handyman, Tune } from "@mui/icons-material";
 
 interface ReviewProps {
     baseModelOptions: BaseModel[];

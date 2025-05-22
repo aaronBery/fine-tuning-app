@@ -6,14 +6,6 @@ import { PieChart } from '@mui/x-charts/PieChart';
 import HandymanIcon from '@mui/icons-material/Handyman';
 import { buttonStyles } from "@/util/styles";
 
-function createData(
-  id: string,
-  date: string,
-  status: string,
-) {
-  return { id, date, status };
-}
-
 export default async function Home() {
   const apiUrl = process.env.API_URL ?? '';
   const apiKey = process.env.API_KEY ?? '';
@@ -38,6 +30,8 @@ export default async function Home() {
     }
   }
 
+  const getJobPluralisation = (count: number) => count === 1 ? 'job' : 'jobs'; 
+
   return (
     <div className="grid grid-cols-2 gap-5 mt-5">
       <div className="col-span-1">
@@ -47,9 +41,9 @@ export default async function Home() {
             <Card sx={{ padding: 5, marginBottom: 5}}>
                 <PieChart series={[
                   { data: [
-                      { id: 0, value: jobsListing.summary.completed, label: 'Completed'},
-                      { id: 1, value: jobsListing.summary.running, label: 'Running'},
-                      { id: 2, value: jobsListing.summary.failed, label: 'Failed'}
+                      { id: 0, value: jobsListing.summary.completed, label: `Completed: ${jobsListing.summary.completed} ${getJobPluralisation(jobsListing.summary.completed)}`},
+                      { id: 1, value: jobsListing.summary.running, label: `Running: ${jobsListing.summary.running} ${getJobPluralisation(jobsListing.summary.running)}`},
+                      { id: 2, value: jobsListing.summary.failed, label: `Failed ${jobsListing.summary.failed} ${getJobPluralisation(jobsListing.summary.failed)}`}
                     ]
                   }
                 ]} />
