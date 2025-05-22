@@ -24,7 +24,7 @@ This project uses [`next/font`](https://nextjs.org/docs/app/building-your-applic
 
 You will need to set the following enviornment variables in your .env file (or environment specific env file variant)
 
-API_URL
+API_URL and
 API_KEY
 
 ## Learn More
