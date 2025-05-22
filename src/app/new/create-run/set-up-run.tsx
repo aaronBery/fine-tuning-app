@@ -40,20 +40,23 @@ export function SetUpRun({ baseModelOptions = [] } : SetUpRunProps) {
             <form onSubmit={(e) => submit(e)}>
                 <div className="flex flex-col">
                     <FormControl sx={{marginBottom: 5}}>
-                        {/* <InputLabel htmlFor="name">Name your job</InputLabel> */}
                         <TextField id="name" name="name" value={newJob.name} onChange={(e) => updateName(e.target.value)}
                         sx={{maxWidth: '50%'}}
                         error={nameTouched && !isNameValid()}
                         onFocus={() => setNameTouched(true)}
-                        helperText="3-50 alpha numeric characters along dashes are permitted." />
+                        label="Name your job"
+                        helperText="3-50 alpha numeric characters along with dashes are permitted." />
                     </FormControl>
 
                     <FormControl>
-                        {/* <InputLabel id="baseModel">Select base model</InputLabel> */}
-                        <Select labelId="baseModel" name="baseModel" value={newJob.baseModel} sx={{maxWidth: '50%'}}
+                        <Select name="baseModel" value={newJob.baseModel} sx={{maxWidth: '50%'}}
+                            displayEmpty
                             error={baseModelTouched && !isBaseModelValid()}
                             onFocus={() => setBaseModelTouched(true)}
                             onChange={(e) => updateBaseModel(e.target.value)}>
+                            <MenuItem disabled value="">
+                                Select base model
+                            </MenuItem>
                             {baseModelOptions.map(option => 
                                 <MenuItem key={option.id} value={option.id}>{option.displayName}</MenuItem>
                             )}

@@ -60,7 +60,9 @@ export const JobWizzardStepControl = ({baseModelOptions}: JobWizzardProps) => {
                     <p className="text-lg font-bold">{getTitleFromStep()}</p>
                     <p className="mb-5 text-gray-500">{getDescriptionFromStep()}</p>
                 </div>
-                <p className={`${styles.stepCount} bg-gray-50 p-1 justify-self-end min-w-[100px]`}><span className="font-bold">{currentStep + 1}</span> of <span className="text-gray-500">{stepCount}</span></p>
+                <div className={`${styles.stepCount} bg-gray-50 p-1 min-w-[60px] flex content-center justify-center max-h-[40px]`}>
+                    <div><span className="font-bold">{currentStep + 1}</span> of <span className="text-gray-500">{stepCount}</span></div>
+                </div>
             </div>
             
             {getWizzardStep()}

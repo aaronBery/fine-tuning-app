@@ -25,6 +25,7 @@ export interface NewJobPostModel {
 export const Review = ({ baseModelOptions }: ReviewProps) => {
     const { newJob } = useContext(NewJobContext);
     const [ errorMsg, setErrorMsg ] = useState('');
+    const [ showSuccessMsg, setShowSuccessMsg ] = useState(false);
 
     const getModelNameFromId = () => baseModelOptions.find(model => model.id === newJob.baseModel)?.displayName;
 
@@ -48,6 +49,8 @@ export const Review = ({ baseModelOptions }: ReviewProps) => {
 
         if(response.status !== 200) {
             setErrorMsg(response.statusText);
+        } else {
+            setShowSuccessMsg(true);
         }
     }
 
@@ -85,7 +88,9 @@ export const Review = ({ baseModelOptions }: ReviewProps) => {
                 marginTop: 2,
             }}>Start fine-tuning</Button>
 
-            {errorMsg && <p>{errorMsg}</p> }
+            {errorMsg && <p className="mt-5 text-red-500">Error: {errorMsg}</p> }
+
+            {showSuccessMsg && <p className="mt-5 text-green-500">Your job has been created.</p>}
         </>
     );
 }

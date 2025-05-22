@@ -59,14 +59,20 @@ export const ConfiguringRun = () => {
                             onFocus={() => setLearningRateTouched(true)} />
                     </FormControl>
                 </div>
+
                 <Button type="submit" 
                     disabled={!isValidEpoch() || !isValidEvaluationAndWarmupEpochs() || !isValidLearningRate()} sx={{
                         ...buttonStyles,
-                        marginTop: 2,
+                        marginBottom: 2,
                     }}>
                     Next: Review
                 </Button>
             </form>
+
+            <p className={`${!isValidEvaluationAndWarmupEpochs() && (epochTouched || evaluationEpochsTouched || warmupEpochsTouched) ? 'visible' : 'hidden'} flex flex-row text-red-500`}>
+                Total number of warm up epochs and evaluation epochs must equal the total number of epochs
+            </p>
+
         </>
     );
 }
