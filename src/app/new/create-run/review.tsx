@@ -47,10 +47,10 @@ export const Review = ({ baseModelOptions }: ReviewProps) => {
 
         const response = await createJob(getBodyFromJobData(newJob));
 
-        if(response.status !== 200) {
-            setErrorMsg(response.statusText);
-        } else {
+        if(response.status === 200 || response.status === 201) {
             setShowSuccessMsg(true);
+        } else {
+            setErrorMsg(response.statusText);
         }
     }
 
